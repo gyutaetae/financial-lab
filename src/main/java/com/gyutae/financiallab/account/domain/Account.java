@@ -4,12 +4,16 @@ package com.gyutae.financiallab.account.domain;
 import java.math.BigDecimal;
 
 class Account {
-    Long id;
-    BigDecimal balance;
+    private Long id;
+    private BigDecimal balance;
+
+    public Account() {
+        this.balance = BigDecimal.ZERO;
+    }
 
     public void deposit(BigDecimal amount) {
         Account account = new Account();
-        account.balance = new BigDecimal("0");
+        this.balance = BigDecimal.ZERO;
 
         if (amount == null) {
             System.out.println("입금 금액이 null입니다.");
