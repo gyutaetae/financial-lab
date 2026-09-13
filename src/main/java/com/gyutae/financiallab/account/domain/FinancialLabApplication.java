@@ -1,13 +1,13 @@
-package com.gyutae.financialledger;
+package com.gyutae.financiallab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ReliableFinancialLedgerLabApplication {
+public class FinancialLabApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ReliableFinancialLedgerLabApplication.class, args);
+		SpringApplication.run(FinancialLabApplication.class, args);
 	}
 
 }
