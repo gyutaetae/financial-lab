@@ -1,4 +1,4 @@
-package com.gyutae.financiallab.account;
+package com.gyutae.financiallab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,5 +1,7 @@
 package com.gyutae.financiallab.account.api;
+import java.math.BigDecimal;
 
-public class CreateAccountRequest {
-    
+public record CreateAccountRequest(
+    BigDecimal initialBalance
+) {
 }

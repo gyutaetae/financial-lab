@@ -17,6 +17,9 @@ public class Account {
         if (balance == null) {
             throw new IllegalArgumentException("계좌 잔액이 null입니다.");
         }
+        if (balance.compareTo(BigDecimal.ZERO) < 0){
+            throw new IllegalArgumentException("계좌 잔액은 0원보다 커야 합니다.");
+        }
     }
 
     public void deposit(BigDecimal amount) {
