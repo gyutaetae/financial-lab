@@ -60,4 +60,22 @@ public class AccountTest {
         //then
         assertThat(account.getBalance()).isEqualByComparingTo(new BigDecimal("10000"));
     }
+
+    @Test 
+    void withrawAllBalance(){
+        Account account = new Account();
+        account.deposit(new BigDecimal("10000"));
+        account.withdraw(new BigDecimal("10000"));
+        assertThat(account.getBalance()).isEqualByComparingTo(new BigDecimal("0"));
+    }
+
+    @Test 
+    void depositZeroAmount(){
+        Account account = new Account();
+        assertThatThrownBy(
+            ()->account.deposit(new BigDecimal("0"))
+        ).isInstanceOf(IllegalArgumentException.class);
+        assertThat(account.getBalance()).isEqualByComparingTo(new BigDecimal("0"));
+    }
+    
 }
