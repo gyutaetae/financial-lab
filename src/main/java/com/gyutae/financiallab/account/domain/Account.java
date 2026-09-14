@@ -3,7 +3,7 @@ package com.gyutae.financiallab.account.domain;
 
 import java.math.BigDecimal;
 
-class Account {
+public class Account {
     private Long id;
     private BigDecimal balance;
 
@@ -12,30 +12,30 @@ class Account {
     }
 
     public void deposit(BigDecimal amount) {
-        Account account = new Account();
-        this.balance = BigDecimal.ZERO;
 
         if (amount == null) {
-            System.out.println("입금 금액이 null입니다.");
-            break;
+            throw new IllegalArgumentException("입금 금액이 null입니다.");
         }
-        if (amount.compareTo(BigDecimal.ZERO) < 0) {
-            System.out.println("입금 금액이 0원보다 작습니다.");
-            break;
+        if (amount.compareTo(BigDecimal.ZERO) < 0 || amount.compareTo(BigDecimal.ZERO) == 0) {
+            throw new IllegalArgumentException("입금 금액은 0원보다 커야 합니다.");
         }
         balance=balance.add(amount);
     } // amount가 0원보다 작으면 오류출력 0보다크면 balance에서 추가 
 
     public void withdraw(BigDecimal amount){
         if (amount == null){
-            System.out.println("출금 금액이 null입니다.");
+            throw new IllegalArgumentException("출금 금액이 null입니다.");
         }
-        if (amount.compareTo(BigDecimal.ZERO)<0){
-            System.out.println("출금 금액이 0원보다 작습니다.");
+        if (amount.compareTo(BigDecimal.ZERO) < 0 || amount.compareTo(BigDecimal.ZERO) == 0){
+            throw new IllegalArgumentException("출금 금액은 0원보다 커야 합니다.");
         }
-        if (balance.compareTo(amount)<0){
+        if (balance.compareTo(amount) < 0){
             throw new InsufficientBalanceException();
         }
         balance=balance.subtract(amount);
         }
+
+    public BigDecimal getBalance(){
+        return balance;
     }
+}
