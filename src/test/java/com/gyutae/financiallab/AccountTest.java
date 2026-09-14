@@ -14,7 +14,7 @@ public class AccountTest {
     @Test
     void deposit(){
         //given
-        Account account = new Account();
+        Account account = new Account(1L, new BigDecimal("0"));
         //when
         account.deposit(new BigDecimal("3000"));
         //then
@@ -24,7 +24,7 @@ public class AccountTest {
     @Test
     void initialbalance(){
         //given
-        Account account = new Account();
+        Account account = new Account(1L, new BigDecimal("0"));
         //when
         BigDecimal balance = account.getBalance();
         //then
@@ -33,7 +33,7 @@ public class AccountTest {
 
     @Test 
     void doubleDeposit(){
-        Account account = new Account();
+        Account account = new Account(1L, new BigDecimal("0"));
         account.deposit(new BigDecimal("3000"));
         account.deposit(new BigDecimal("5000"));
         assertThat(account.getBalance()).isEqualTo(new BigDecimal("8000"));
@@ -41,7 +41,7 @@ public class AccountTest {
 
     @Test 
     void withdraw(){
-        Account account = new Account();
+        Account account = new Account(1L, new BigDecimal("0"));
         account.deposit( new BigDecimal("10000"));
         account.withdraw(new BigDecimal("3000"));
         assertThat(account.getBalance()).isEqualTo(new BigDecimal("7000"));
@@ -50,7 +50,7 @@ public class AccountTest {
     @Test 
     void InsufficientBalanceException(){
         //given
-        Account account = new Account();
+        Account account = new Account(1L, new BigDecimal("0")  );
         account.deposit(new BigDecimal("10000"));
         //when
         assertThatThrownBy(
@@ -63,7 +63,7 @@ public class AccountTest {
 
     @Test 
     void withrawAllBalance(){
-        Account account = new Account();
+        Account account = new Account(1L, new BigDecimal("0"));
         account.deposit(new BigDecimal("10000"));
         account.withdraw(new BigDecimal("10000"));
         assertThat(account.getBalance()).isEqualByComparingTo(new BigDecimal("0"));
@@ -71,11 +71,27 @@ public class AccountTest {
 
     @Test 
     void depositZeroAmount(){
-        Account account = new Account();
+        Account account = new Account(1L, new BigDecimal("0"));
         assertThatThrownBy(
             ()->account.deposit(new BigDecimal("0"))
         ).isInstanceOf(IllegalArgumentException.class);
+        
         assertThat(account.getBalance()).isEqualByComparingTo(new BigDecimal("0"));
     }
+
+    @Test
+    void getId(){
+        Account account = new Account(1L, new BigDecimal("0"));
+        assertThat(account.getId()).isEqualTo(1L);
+    }
     
+    @Test 
+    void IDNullException(){
+        assertThatThrownBy(
+            ()-> new Account(null, new BigDecimal("0"))
+        ).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(
+            ()-> new Account(1L, null)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
 }

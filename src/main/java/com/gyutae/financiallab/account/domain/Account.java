@@ -7,8 +7,16 @@ public class Account {
     private Long id;
     private BigDecimal balance;
 
-    public Account() {
-        this.balance = BigDecimal.ZERO;
+    public Account(Long id, BigDecimal balance) {
+        this.id=id;
+        this.balance=balance;
+        
+        if (id==null){
+            throw new IllegalArgumentException("계좌 id가 null입니다.");
+        }
+        if (balance == null) {
+            throw new IllegalArgumentException("계좌 잔액이 null입니다.");
+        }
     }
 
     public void deposit(BigDecimal amount) {
@@ -37,5 +45,9 @@ public class Account {
 
     public BigDecimal getBalance(){
         return balance;
+    }
+
+    public Long getId(){
+        return id;
     }
 }
