@@ -1,0 +1,27 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "files.exclude": {
+    "**/.gradle": true,
+    "**/build": true
+  },
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-25",
+      "path": "/home/zcxc/.gradle/jdks/eclipse_adoptium-25-amd64-linux.2",
+      "default": true
+    }
+  ],
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.format.settings.profile": "GoogleStyle",
+  "java.saveActions.organizeImports": true,
+  "java.test.config": {
+    "name": "financial-lab-tests",
+    "workingDirectory": "${workspaceFolder}"
+  },
+  "spring-boot.ls.java.home": "/home/zcxc/.gradle/jdks/eclipse_adoptium-25-amd64-linux.2",
+  "terminal.integrated.defaultProfile.linux": "zsh"
+}

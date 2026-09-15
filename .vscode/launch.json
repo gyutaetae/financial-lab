@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot: Financial Lab",
+      "request": "launch",
+      "mainClass": "com.gyutae.financiallab.FinancialLabApplication",
+      "projectName": "financial-lab",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ]
+}
