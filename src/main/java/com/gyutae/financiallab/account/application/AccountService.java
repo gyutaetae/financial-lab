@@ -12,13 +12,21 @@ import com.gyutae.financiallab.account.domain.Account;
 //실제 api에서는 사용자가 만들지않고 서비스가 자동으로 ID를 생성함
 @Service // 이걸붙이면 new AccountService() 안해도 스프링이 알아서 만들어줌
 public class AccountService {
-	private final AtomicLong idGenerator = new AtomicLong(1);
-	private final ConcurrentHashMap<Long, Account> accounts = new ConcurrentHashMap<>();
+    private final AtomicLong idGenerator = new AtomicLong(1);
+    private final ConcurrentHashMap<Long, Account> accounts = new ConcurrentHashMap<>();
 
-	public Account createAccount(BigDecimal initialBalance) {
-		Long id = idGenerator.getAndIncrement();
-		Account account = new Account(id, initialBalance);
-		accounts.put(id, account);
-		return account;
-	}
+    public Account createAccount(BigDecimal initialBalance) {
+        Long id = idGenerator.getAndIncrement();
+        Account account = new Account(id, initialBalance);
+        accounts.put(id, account);
+        return account;
+    }
+
+    public Account findAccount(Long id) {
+        Account account = accounts.get(id);
+        if (account == null) {
+            throw new AccountNotFoundException(id); // throw: 예외를 호출한쪽으로 전달하며 실행을 중단
+        }
+        return account;
+    }
 }
