@@ -3,6 +3,9 @@ package com.gyutae.financiallab.account.api;
 
 import java.math.BigDecimal;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 // 컨트롤러는 서비스가 필요한데 직접만들지않고 에너테이션을 사용해서 스프링이 만들어서 생성자로 보냄
 // 스프링아 클래스 컨트롤러 객체로만들어서 관리해줘
 // 컨트롤러는 계좌를 새성하기위해 service가필요함
@@ -34,6 +37,14 @@ public class AccountController {
 	) {
 		BigDecimal initialBalance = request.initialBalance();
 		Account account = accountService.createAccount(initialBalance); // service호출
+
+		return new AccountResponse(account.getId(), account.getBalance());
+	}
+
+	@GetMapping("/{id}")
+	public AccountResponse getAccount(
+			@PathVariable Long id) {
+		Account account = accountService.findAccount(id);
 
 		AccountResponse response = new AccountResponse(account.getId(), account.getBalance());
 		return response;
