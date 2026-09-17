@@ -41,7 +41,7 @@ public class AccountController {
 		return new AccountResponse(account.getId(), account.getBalance());
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{id}") // get이랑 id가 들어오면 메서드를 실행한다
 	public AccountResponse getAccount(
 			@PathVariable Long id) {
 		Account account = accountService.findAccount(id);
