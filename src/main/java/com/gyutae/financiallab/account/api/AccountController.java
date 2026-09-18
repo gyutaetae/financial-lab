@@ -23,7 +23,7 @@ import com.gyutae.financiallab.account.application.AccountService;
 import com.gyutae.financiallab.account.domain.Account;
 
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/accounts") // base url을 지정, /accounts로 시작하는 요청은 이 컨트롤러가 처리
 public class AccountController {
 	private final AccountService accountService;
 
@@ -33,12 +33,14 @@ public class AccountController {
 
 	@PostMapping // post 요청이들어오면 메서드를 실행한다
 	public AccountResponse createAccount(
-			@RequestBody CreateAccountRequest request // json 요청을 java객체로 변경
+			@RequestBody CreateAccountRequest request // 클라이언트는 json 요청을 보낸다 java객체로 변경 new createaccountrequest를 만들어서
+														// request에 넣어줌 요청이 하나의 값만 가지고 있어도 요청 객체를 별도로 만들어야함
 	) {
 		BigDecimal initialBalance = request.initialBalance();
 		Account account = accountService.createAccount(initialBalance); // service호출
 
-		return new AccountResponse(account.getId(), account.getBalance());
+		return new AccountResponse(account.getId(), account.getBalance()); // "id":1, "balance":1000 이런식으로 json으로 요청한
+																			// 클라이언트에게 반환됨
 	}
 
 	@GetMapping("/{id}") // get이랑 id가 들어오면 메서드를 실행한다
@@ -48,5 +50,14 @@ public class AccountController {
 
 		AccountResponse response = new AccountResponse(account.getId(), account.getBalance());
 		return response;
+	}
+
+	@PostMapping("/{id}/deposits")
+	public AccountResponse deposit(
+			@PathVariable Long id, // url에 있는 id를 가져와서 Long id에 넣어줌
+			@RequestBody DepositRequest request) {
+		BigDecimal amount = request.amount();
+		Account account = accountService.deposit(id, amount);
+		return new AccountResponse(account.getId(), account.getBalance());
 	}
 }
