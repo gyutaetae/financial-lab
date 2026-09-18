@@ -35,4 +35,10 @@ public class AccountService {
 		account.deposit(amount);
 		return account;
 	}
+
+	public Account withdraw(Long id, BigDecimal amount) {
+		Account account = findAccount(id);
+		account.withdraw(amount);
+		return account;
+	}
 }

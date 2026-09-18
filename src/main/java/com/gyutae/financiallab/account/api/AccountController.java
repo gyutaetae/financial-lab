@@ -48,8 +48,7 @@ public class AccountController {
 			@PathVariable Long id) {
 		Account account = accountService.findAccount(id);
 
-		AccountResponse response = new AccountResponse(account.getId(), account.getBalance());
-		return response;
+		return new AccountResponse(account.getId(), account.getBalance());
 	}
 
 	@PostMapping("/{id}/deposits")
@@ -58,6 +57,15 @@ public class AccountController {
 			@RequestBody DepositRequest request) {
 		BigDecimal amount = request.amount();
 		Account account = accountService.deposit(id, amount);
+		return new AccountResponse(account.getId(), account.getBalance());
+	}
+
+	@PostMapping("/{id}/withdrawals")
+	public AccountResponse withdraw(
+			@PathVariable Long id,
+			@RequestBody WithdrawRequest request) {
+		BigDecimal amount = request.amount();
+		Account account = accountService.withdraw(id, amount);
 		return new AccountResponse(account.getId(), account.getBalance());
 	}
 }
