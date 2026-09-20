@@ -2,9 +2,9 @@ package com.gyutae.financiallab.account.api;
 
 import java.math.BigDecimal;
 
-public record AccountResponse(
-        Long id,
-        BigDecimal balance) {
+public record AccountResponse( // record를 쓰면 단순한 객체를 짧게 만들수있음 DTO를 만들때 record를 쓰면 좋음
+		Long id,
+		BigDecimal balance) {
 
 }
 

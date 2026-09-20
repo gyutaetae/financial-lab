@@ -41,3 +41,24 @@ public class AccountExceptionHandler {
 				exception.getMessage());
 	}
 }
+/*
+ * /
+ * 꼭알아야할 http 상태 코드
+ * 1xx 처리중
+ * 2xx 성공
+ * 4xx클라이언트문제
+ * 5xx서버문제
+ *
+ * 201 Created: 요청이 성공적으로 수행되어 새로운 리소스가 생성됨
+ * 204 No Content: 요청이 성공적으로 수행되었지만 반환할 콘텐츠가 없음
+ * 400 Bad Request: 잘못된 요청, 서버가 요청을 이해할 수 없음
+ * 401 Unauthorized: 인증이 필요함, 인증되지 않은 사용자
+ * 403 Forbidden: 서버가 요청을 이해했지만 권한이 없음
+ * 404 Not Found: 요청한 리소스를 찾을 수 없음
+ * 409 Conflict: 요청이 현재 서버 상태와 충돌함, 예를 들어 중복된
+ * 429 Too Many Requests: 클라이언트가 너무 많은 요청을 보냄, 서버가 요청을 처리할 수 없음
+ * 500 Internal Server Error: 클라이언트가아니라 서버가 예상치못한 문제
+ * 502 Bad Gateway: 우리서버가 다른서버에서 잘못된 응답
+ * 503 Service Unavailable: 서버가 일시적으로 과부하 또는 유지보수 중
+ * /
+ */

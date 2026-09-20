@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gyutae.financiallab.account.application.AccountService;
+import com.gyutae.financiallab.account.application.TransferResult;
 import com.gyutae.financiallab.account.domain.Account;
 
 @RestController
@@ -67,5 +68,21 @@ public class AccountController {
 		BigDecimal amount = request.amount();
 		Account account = accountService.withdraw(id, amount);
 		return new AccountResponse(account.getId(), account.getBalance());
+	}
+
+	@PostMapping("/{fromAccountId}/transfers") // restful 하게하려면 명사를 사용하고 복수형으로 통일함
+	public TransferResponse transfer(
+			@PathVariable Long fromAccountId,
+			@RequestBody TransferRequest request) {
+		BigDecimal amount = request.amount();
+		Long toAccountId = request.toAccountId();
+		TransferResult result = accountService.transfer(fromAccountId, toAccountId, amount);
+		Account fromAccount = result.fromAccount();
+		Account toAccount = result.toAccount();
+		return new TransferResponse(
+				fromAccount.getId(),
+				toAccount.getId(),
+				fromAccount.getBalance(),
+				toAccount.getBalance());
 	}
 }

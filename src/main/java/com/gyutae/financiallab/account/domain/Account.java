@@ -1,56 +1,56 @@
 package com.gyutae.financiallab.account.domain;
-// balance는 입금하면 증가 출금하면 감소 잔액보다 많이 출금하면 InsufficientBalanceException 발생 0원보다작은 금액은 입출금할수없다. 
+// balance는 입금하면 증가 출금하면 감소 잔액보다 많이 출금하면 InsufficientBalanceException 발생 0원보다작은 금액은 입출금할수없다.
 
 import java.math.BigDecimal;
 
-public class Account {
-    private Long id;
-    private BigDecimal balance;
+public class Account { // 어카운트는 내부상태가 변경ㄱ되고 업무 규칙과 행동을 가지고 있으므로 레코드가아닌 일반클래스를 사용함
+	private Long id;
+	private BigDecimal balance;
 
-    public Account(Long id, BigDecimal balance) {
-        this.id=id;
-        this.balance=balance;
-        
-        if (id==null){
-            throw new IllegalArgumentException("계좌 id가 null입니다.");
-        }
-        if (balance == null) {
-            throw new IllegalArgumentException("계좌 잔액이 null입니다.");
-        }
-        if (balance.compareTo(BigDecimal.ZERO) < 0){
-            throw new IllegalArgumentException("계좌 잔액은 0원보다 커야 합니다.");
-        }
-    }
+	public Account(Long id, BigDecimal balance) {
+		this.id = id;
+		this.balance = balance;
 
-    public void deposit(BigDecimal amount) {
+		if (id == null) {
+			throw new IllegalArgumentException("계좌 id가 null입니다.");
+		}
+		if (balance == null) {
+			throw new IllegalArgumentException("계좌 잔액이 null입니다.");
+		}
+		if (balance.compareTo(BigDecimal.ZERO) < 0) {
+			throw new IllegalArgumentException("계좌 잔액은 0원보다 커야 합니다.");
+		}
+	}
 
-        if (amount == null) {
-            throw new IllegalArgumentException("입금 금액이 null입니다.");
-        }
-        if (amount.compareTo(BigDecimal.ZERO) < 0 || amount.compareTo(BigDecimal.ZERO) == 0) {
-            throw new IllegalArgumentException("입금 금액은 0원보다 커야 합니다.");
-        }
-        balance=balance.add(amount);
-    } // amount가 0원보다 작으면 오류출력 0보다크면 balance에서 추가 
+	public void deposit(BigDecimal amount) {
 
-    public void withdraw(BigDecimal amount){
-        if (amount == null){
-            throw new IllegalArgumentException("출금 금액이 null입니다.");
-        }
-        if (amount.compareTo(BigDecimal.ZERO) < 0 || amount.compareTo(BigDecimal.ZERO) == 0){
-            throw new IllegalArgumentException("출금 금액은 0원보다 커야 합니다.");
-        }
-        if (balance.compareTo(amount) < 0){
-            throw new InsufficientBalanceException();
-        }
-        balance=balance.subtract(amount);
-        }
+		if (amount == null) {
+			throw new IllegalArgumentException("입금 금액이 null입니다.");
+		}
+		if (amount.compareTo(BigDecimal.ZERO) < 0 || amount.compareTo(BigDecimal.ZERO) == 0) {
+			throw new IllegalArgumentException("입금 금액은 0원보다 커야 합니다.");
+		}
+		balance = balance.add(amount);
+	} // amount가 0원보다 작으면 오류출력 0보다크면 balance에서 추가
 
-    public BigDecimal getBalance(){
-        return balance;
-    }
+	public void withdraw(BigDecimal amount) {
+		if (amount == null) {
+			throw new IllegalArgumentException("출금 금액이 null입니다.");
+		}
+		if (amount.compareTo(BigDecimal.ZERO) < 0 || amount.compareTo(BigDecimal.ZERO) == 0) {
+			throw new IllegalArgumentException("출금 금액은 0원보다 커야 합니다.");
+		}
+		if (balance.compareTo(amount) < 0) {
+			throw new InsufficientBalanceException();
+		}
+		balance = balance.subtract(amount);
+	}
 
-    public Long getId(){
-        return id;
-    }
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	public Long getId() {
+		return id;
+	}
 }
