@@ -72,8 +72,8 @@ public class AccountController {
 
 	@PostMapping("/{fromAccountId}/transfers") // restful 하게하려면 명사를 사용하고 복수형으로 통일함
 	public TransferResponse transfer(
-			@PathVariable Long fromAccountId,
-			@RequestBody TransferRequest request) {
+			@PathVariable Long fromAccountId, // from은 url로 받음
+			@RequestBody TransferRequest request) { // to는 request로 받음
 		BigDecimal amount = request.amount();
 		Long toAccountId = request.toAccountId();
 		TransferResult result = accountService.transfer(fromAccountId, toAccountId, amount);
@@ -84,5 +84,5 @@ public class AccountController {
 				toAccount.getId(),
 				fromAccount.getBalance(),
 				toAccount.getBalance());
-	}
+	} // 리퀘스트 -> 서비스 -> 리절트 -> 리스판스
 }
