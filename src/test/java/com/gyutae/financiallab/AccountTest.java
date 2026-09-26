@@ -100,7 +100,15 @@ public class AccountTest {
 		Account fromAccount = accountService.createAccount(new BigDecimal("10000"));
 		Account toAccount = accountService.createAccount(new BigDecimal("5000"));
 		TransferResult result = accountService.transfer(fromAccount.getId(), toAccount.getId(), new BigDecimal("3000")); // when
-		assertThat(result.fromAccount().getBalance()).isEqualTo(new BigDecimal("7000")); // then
-		assertThat(result.toAccount().getBalance()).isEqualTo(new BigDecimal("8000"));
+		// then
+		assertThat(result.fromAccount().getBalance()).isEqualByComparingTo(new BigDecimal("7000"));
+		assertThat(result.toAccount().getBalance()).isEqualByComparingTo(new BigDecimal("8000")); // isEqualByComparingTo가
+																									// BigDecimal 비교할때는
+																									// 더적합. isEqualTo는
+																									// 소수점 자릿수 scale까지도
+																									// 비교함
+		assertThat(result.fromAccount().getId()).isEqualTo(fromAccount.getId());
+		assertThat(result.toAccount().getId()).isEqualTo(toAccount.getId());
 	}
+
 }
