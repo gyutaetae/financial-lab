@@ -100,6 +100,10 @@ public class AccountTest {
 		Account fromAccount = accountService.createAccount(new BigDecimal("10000"));
 		Account toAccount = accountService.createAccount(new BigDecimal("5000"));
 		TransferResult result = accountService.transfer(fromAccount.getId(), toAccount.getId(), new BigDecimal("3000")); // when
+																															// //거래가
+																															// 성공하므로
+																															// transferresult를
+																															// 반환함
 		// then
 		assertThat(result.fromAccount().getBalance()).isEqualByComparingTo(new BigDecimal("7000"));
 		assertThat(result.toAccount().getBalance()).isEqualByComparingTo(new BigDecimal("8000")); // isEqualByComparingTo가
@@ -111,4 +115,14 @@ public class AccountTest {
 		assertThat(result.toAccount().getId()).isEqualTo(toAccount.getId());
 	}
 
+	@Test
+	void transferInsufficientBalance() {
+		AccountService accountService = new AccountService();
+		Account fromAccount = accountService.createAccount(new BigDecimal("10000"));
+		Account toAccount = accountService.createAccount(new BigDecimal("5000"));
+		// when
+		assertThatThrownBy(
+				() -> accountService.transfer(fromAccount.getId(), toAccount.getId(), new BigDecimal("13000")))
+				.isInstanceOf(InsufficientBalanceException.class);
+	}
 }
