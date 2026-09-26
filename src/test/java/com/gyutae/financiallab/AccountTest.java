@@ -124,5 +124,7 @@ public class AccountTest {
 		assertThatThrownBy(
 				() -> accountService.transfer(fromAccount.getId(), toAccount.getId(), new BigDecimal("13000")))
 				.isInstanceOf(InsufficientBalanceException.class);
+		assertThat(fromAccount.getBalance()).isEqualByComparingTo(new BigDecimal("10000"));
+		assertThat(toAccount.getBalance()).isEqualByComparingTo(new BigDecimal("5000"));
 	}
 }
