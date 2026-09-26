@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
+import com.gyutae.financiallab.account.application.AccountNotFoundException;
 import com.gyutae.financiallab.account.application.AccountService;
 import com.gyutae.financiallab.account.application.TransferResult;
 import com.gyutae.financiallab.account.domain.Account;
@@ -126,5 +127,27 @@ public class AccountTest {
 				.isInstanceOf(InsufficientBalanceException.class);
 		assertThat(fromAccount.getBalance()).isEqualByComparingTo(new BigDecimal("10000"));
 		assertThat(toAccount.getBalance()).isEqualByComparingTo(new BigDecimal("5000"));
+	}
+
+	@Test
+	void transferNotFoundAccount() {
+		AccountService accountService = new AccountService();
+		Account fromAccount = accountService.createAccount(new BigDecimal("27000"));
+		// when
+		assertThatThrownBy(
+				() -> accountService.transfer(fromAccount.getId(), 999L, new BigDecimal("1000")))
+				.isInstanceOf(AccountNotFoundException.class);
+		assertThat(fromAccount.getBalance()).isEqualByComparingTo(new BigDecimal("27000"));
+	}
+
+	@Test
+	void tranferSameAccount() {
+		AccountService accountService = new AccountService();
+		Account fromAccount = accountService.createAccount(new BigDecimal("10000"));
+		// when
+		assertThatThrownBy(
+				() -> accountService.transfer(fromAccount.getId(), fromAccount.getId(), new BigDecimal("1000")))
+				.isInstanceOf(IllegalArgumentException.class);
+		assertThat(fromAccount.getBalance()).isEqualByComparingTo(new BigDecimal("10000"));
 	}
 }
